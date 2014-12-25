@@ -1,2 +1,27 @@
-A friend of mine asked for a very simple Maven project. This project has one 
-Java class that prints "Hello, World." After downloading, run "mvn -q compile exec:java"
+# RAGNVALD
+
+This project helps Pokemon collectors.
+
+# Get It
+
+```
+git clone https://github.com/medined/ragnvald.git
+```
+
+# Compile It
+
+```
+mvn package
+```
+
+# Run It
+
+```
+java -jar target/ragnvald-0.0.1-SNAPSHOT.jar
+```
+
+# See It
+
+```
+firefox http://localhost:8080
+```
