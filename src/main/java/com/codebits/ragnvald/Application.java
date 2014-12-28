@@ -12,13 +12,18 @@ import org.h2.server.web.WebServlet;
 @SpringBootApplication
 public class Application {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         ApplicationContext context = SpringApplication.run(Application.class, args);
-        PokomonSetRepository repository = context.getBean(PokomonSetRepository.class);
-        repository.save(new PokemonSet(1, "Base Set", "baseSet", 102));
-        repository.save(new PokemonSet(2, "Jungle", "jungle", 64));
-    }
 
+        PokomonSetRepository repository = context.getBean(PokomonSetRepository.class);
+        SetsCsvReader reader = new SetsCsvReader("src/main/resources/sets.csv");
+        reader.read();
+        for (PokemonSet set : reader.getRecords()) {
+            repository.save(set);
+        }
+        
+    }
+    
     @Bean
     public ServletRegistrationBean h2servletRegistration() {
         ServletRegistrationBean registration = new ServletRegistrationBean(new WebServlet());

@@ -62,7 +62,7 @@ public class PokemonSet implements Serializable {
     @Setter
     private Integer count;
 
-    protected PokemonSet() { }
+    public PokemonSet() { }
 
     @Override
     public String toString() {
