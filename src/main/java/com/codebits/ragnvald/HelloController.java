@@ -1,13 +1,19 @@
 package com.codebits.ragnvald;
 
-import org.springframework.web.bind.annotation.RestController;
+import com.codebits.ragnvald.domain.PokomonSetRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RestController
+@Controller
 public class HelloController {
+    
+    @Autowired
+    private PokomonSetRepository pokomonSetRepository = null;
 
     @RequestMapping("/")
     public String index() {
+        System.out.println("count: " + pokomonSetRepository.count());
         return "HelloWorld!";
     }
 

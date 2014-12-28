@@ -1,78 +1,102 @@
 package com.codebits.ragnvald.domain;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
-//1,Base Set,base_set_1,102
 
 @Entity
 public class PokemonSet implements Serializable {
 
-    /** Instantiate an object.
-     * 
+    /**
+     * Instantiate an object.
+     *
      * @param number The English number of the set.
      * @param name The English name of the set.
-     * @param rootName The root to build file names around.
      * @param count The number of cards in a normal set.
      */
-    public PokemonSet(Integer number, String name, String rootName, Integer count) {
+    public PokemonSet(Integer number, String name, Integer count) {
         this.number = number;
         this.name = name;
-        this.rootName = rootName;
         this.count = count;
     }
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter
     private Long id;
 
-    /** English set number
-     * 
+    /**
+     * English set number
+     *
      */
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     @Getter
     @Setter
     private Integer number;
 
-    /** English set name
-     * 
+    /**
+     * English set name
+     *
      */
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     @Getter
     @Setter
     private String name;
 
-    /** root to build file names around.
-     * 
-     */
-    @Column(nullable = false)
-    @Getter
-    @Setter
-    private String rootName;
-
-    /** Number of cards in a normal set including EX but not secret.
-     * 
+    /**
+     * Number of cards in a normal set including EX but not secret.
+     *
      */
     @Column(nullable = false)
     @Getter
     @Setter
     private Integer count;
 
-    public PokemonSet() { }
+    public String getRootName() {
+        return getName().replaceAll(" ", "_");
+    }
+    
+    public PokemonSet() {
+    }
 
     @Override
     public String toString() {
-     return new ToStringBuilder(this).
-       append("id", id).
-       append("number", number).
-       append("name", name).
-       append("rootName", rootName).
-       append("count", count).
-       toString();
-   }
-    
+        return new ToStringBuilder(this).
+                append("id", getId()).
+                append("number", getNumber()).
+                append("name", getName()).
+                append("rootName", getRootName()).
+                append("count", getCount()).
+                toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        PokemonSet rhs = (PokemonSet) obj;
+        return new EqualsBuilder()
+                .appendSuper(super.equals(obj))
+                .append(getNumber(), rhs.getNumber())
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 79 * hash + Objects.hashCode(getNumber());
+        return hash;
+    }
+
 }

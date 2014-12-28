@@ -37,8 +37,7 @@ public class SetsCsvReader {
                 PokemonSet set = new PokemonSet();
                 set.setNumber(Integer.parseInt(component[0]));
                 set.setName(component[1]);
-                set.setRootName(component[2]);
-                set.setCount(Integer.parseInt(component[3]));
+                set.setCount(Integer.parseInt(component[2]));
                 records.add(set);
                 recordCount++;
             }
