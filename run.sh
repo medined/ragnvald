@@ -1,2 +1,2 @@
 #!/bin/sh
-java -jar target/ragnvald-*.jar
+mvn package spring-boot:run
