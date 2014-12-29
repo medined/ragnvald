@@ -33,7 +33,7 @@ public class PokemonSet implements Serializable {
      * English set number
      *
      */
-    @Column(nullable = false, unique = true)
+    @Column(nullable = true)
     @Getter
     @Setter
     private Integer number;
