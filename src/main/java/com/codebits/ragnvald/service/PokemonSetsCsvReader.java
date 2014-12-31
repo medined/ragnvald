@@ -1,44 +1,49 @@
-package com.codebits.ragnvald;
+package com.codebits.ragnvald.service;
 
 import com.codebits.ragnvald.domain.PokemonSet;
+import com.codebits.ragnvald.repository.PokomonSetRepository;
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import lombok.Getter;
-import lombok.Setter;
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Service;
 
-public class SetsCsvReader {
+@Service
+public class PokemonSetsCsvReader {
+
+    @Autowired
+    private final PokomonSetRepository pokomonSetRepository = null;
+
+    @Value("${csv.pokemon.set}")
+    private final String filename = null;
 
     private final Charset charset = Charset.defaultCharset();
-    private String filename = null;
-    @Getter private final List<PokemonSet> records = new ArrayList<>();
     @Getter private int recordCount = 0;
-    @Setter private BufferedReader reader = null;
-    @Setter private boolean trim = false;
-
+    
+    @PostConstruct
     public void read() {
+        
+        BufferedReader reader = null;
         String line;
         String cvsSplitBy = ",";
 
         try {
-            reader = new BufferedReader(new InputStreamReader(new FileInputStream(filename), charset));
+            reader = new BufferedReader(new InputStreamReader(new ClassPathResource(filename).getInputStream(), charset));
         
             while ((line = reader.readLine()) != null) {
-                List<String> fields = new ArrayList<>();
                 String[] component = line.split(cvsSplitBy);
                 PokemonSet set = new PokemonSet();
                 set.setNumber(Integer.parseInt(component[0]));
                 set.setName(component[1]);
                 set.setCount(Integer.parseInt(component[2]));
-                records.add(set);
+                pokomonSetRepository.save(set);
                 recordCount++;
             }
 
@@ -49,10 +54,6 @@ public class SetsCsvReader {
         } finally {
             IOUtils.closeQuietly(reader);
         }
-    }
-
-    public SetsCsvReader(final String filename) {
-        this.filename = filename;
     }
 
 }

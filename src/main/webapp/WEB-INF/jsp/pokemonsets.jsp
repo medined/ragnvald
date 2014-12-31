@@ -43,7 +43,7 @@
                                 <c:out value="${entry.number}" />
                             </c:if>
                         </td>
-                        <td><c:out value="${entry.name}" /></td>
+                        <td><a href="/inventory/<c:out value="${entry.rootName}" />" target="_blank"><c:out value="${entry.name}" /></a></td>
                         <td><c:out value="${entry.count}" /></td>
                     </tr>
                 </c:forEach>

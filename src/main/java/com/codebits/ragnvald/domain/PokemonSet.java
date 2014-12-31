@@ -57,7 +57,7 @@ public class PokemonSet implements Serializable {
     private Integer count;
 
     public String getRootName() {
-        return getName().replaceAll(" ", "_");
+        return getName().replaceAll(" ", "_").toLowerCase();
     }
     
     public PokemonSet() {

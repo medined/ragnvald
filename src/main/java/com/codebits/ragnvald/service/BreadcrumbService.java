@@ -1,4 +1,4 @@
-package com.codebits.ragnvald;
+package com.codebits.ragnvald.service;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

@@ -1,5 +1,6 @@
-package com.codebits.ragnvald.domain;
+package com.codebits.ragnvald.repository;
 
+import com.codebits.ragnvald.domain.PokemonSet;
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

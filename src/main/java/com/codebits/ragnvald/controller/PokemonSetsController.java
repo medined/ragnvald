@@ -1,6 +1,7 @@
-package com.codebits.ragnvald;
+package com.codebits.ragnvald.controller;
 
-import com.codebits.ragnvald.domain.PokomonSetRepository;
+import com.codebits.ragnvald.service.BreadcrumbService;
+import com.codebits.ragnvald.repository.PokomonSetRepository;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PokemonSetsController {
 
     @Autowired
-    private BreadcrumbService breadcrumbService = null;
+    private final BreadcrumbService breadcrumbService = null;
 
     @Autowired
-    private PokomonSetRepository pokomonSetRepository = null;
+    private final PokomonSetRepository pokomonSetRepository = null;
 
     @RequestMapping("/pokemonsets")
     public String index(Map<String, Object> model) {
