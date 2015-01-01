@@ -30,9 +30,6 @@ public class PokemonCardReaderBean {
 
     private final Charset charset = Charset.defaultCharset();
 
-    @Getter
-    private int recordCount = 0;
-
     @PostConstruct
     public void read() throws IOException {
         for (PokemonSet set : pokomonSetRepository.findAll()) {

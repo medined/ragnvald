@@ -15,6 +15,9 @@
     </head>
     <body>
         <%@include file="header.jsp" %>
-        Inventory for a given set.
+        <pre>
+            for each pokemon set
+                display cards with count = 0
+        </pre>
     </body>
 </html>

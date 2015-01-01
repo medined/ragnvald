@@ -16,19 +16,29 @@ public class Application {
     public static void main(final String[] args) throws Exception {
         SpringApplication.run(Application.class, args);
     }
-    
-    @Bean
-    @DependsOn("pokemonSetsReaderBean")
-    public PokemonCardReaderBean getPokemonCardReaderBean() {
-        return new PokemonCardReaderBean();
-    }
-    
+
     @Bean(name="pokemonSetsReaderBean")
     public PokemonSetsReaderBean getPokemonSetsReaderBean() {
         return new PokemonSetsReaderBean();
     }
     
-    @Bean InventoryReaderBean getInventoryReaderBean() {
+    /*
+     * Read the set information before reading the
+     * card information.
+     */
+    @Bean(name="pokemonCardReaderBean")
+    @DependsOn("pokemonSetsReaderBean")
+    public PokemonCardReaderBean getPokemonCardReaderBean() {
+        return new PokemonCardReaderBean();
+    }
+    
+    /*
+     * Read the set and card information before reading
+     * the inventory information.
+     */
+    @Bean(name="inventoryReaderBean")
+    @DependsOn("pokemonCardReaderBean")
+    public InventoryReaderBean getInventoryReaderBean() {
         return new InventoryReaderBean();
     }
     

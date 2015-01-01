@@ -10,4 +10,8 @@ public interface InventoryRepository extends CrudRepository<Inventory, Long> {
 
     @Override
     List<Inventory> findAll();
+    
+    Inventory findByPokemonSetRootNameAndPokemonCardId(final String pokemonSetRootName, final String pokemonCardId);
+
+    List<Inventory> findByPokemonSetRootName(final String pokemonSetRootName);
 }

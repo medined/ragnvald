@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -37,8 +38,19 @@ public class Inventory implements Serializable {
     @Column(nullable = false)
     @Getter
     private String pokemonCardId;
+    
+    /** How any copies of this card do you have?
+     */
+    @Column
+    @Getter
+    @Setter
+    private Integer count = 0;
 
     public Inventory() {
+    }
+    
+    public void incrementCount() {
+        count++;
     }
 
     @Override
@@ -47,6 +59,7 @@ public class Inventory implements Serializable {
                 append("id", getId()).
                 append("pokemonSetRootName", getPokemonSetRootName()).
                 append("pokemonCardId", getPokemonCardId()).
+                append("count", getCount()).
                 toString();
     }
 

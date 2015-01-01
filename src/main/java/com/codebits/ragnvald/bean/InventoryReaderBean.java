@@ -1,8 +1,10 @@
 package com.codebits.ragnvald.bean;
 
 import com.codebits.ragnvald.domain.Inventory;
+import com.codebits.ragnvald.domain.PokemonCard;
 import com.codebits.ragnvald.domain.PokemonSet;
 import com.codebits.ragnvald.repository.InventoryRepository;
+import com.codebits.ragnvald.repository.PokemonCardRepository;
 import com.codebits.ragnvald.repository.PokomonSetRepository;
 import com.google.common.base.Preconditions;
 import java.io.BufferedReader;
@@ -10,8 +12,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.util.List;
 import javax.annotation.PostConstruct;
-import lombok.Getter;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +27,21 @@ public class InventoryReaderBean {
     private final PokomonSetRepository pokomonSetRepository = null;
 
     @Autowired
+    private final PokemonCardRepository pokemonCardRepository = null;
+
+    @Autowired
     private final InventoryRepository inventoryRepository = null;
 
     private final Charset charset = Charset.defaultCharset();
 
-    @Getter
-    private int recordCount = 0;
-
     @PostConstruct
     public void read() throws IOException {
+        /*
+         * Copy all card information into personal inventory.
+         */
+        for (PokemonCard cards : pokemonCardRepository.findAll()) {
+            inventoryRepository.save(new Inventory(cards.getPokemonSetRootName(), cards.getPokemonCardId()));
+        }
         for (PokemonSet set : pokomonSetRepository.findAll()) {
             if (set.getNumber() == -1) {
                 continue;
@@ -62,15 +70,22 @@ public class InventoryReaderBean {
             try {
                 log.info("Reading inventory set: " + set.getRootName());
                 while ((line = reader.readLine()) != null) {
-                    Inventory inventory = new Inventory(set.getRootName(), line);
-                    inventoryRepository.save(inventory);
+                    Inventory inventory = inventoryRepository.findByPokemonSetRootNameAndPokemonCardId(set.getRootName(), line);
+                    if (inventory == null) {
+                        log.error(String.format("Inventory Error. Unable to find card %s in set %s", line, set.getRootName()));
+                    } else {
+                        inventory.incrementCount();
+                        inventoryRepository.save(inventory);
+                    }
                 }
             } catch (IOException e) {
                 throw new RuntimeException(String.format("Unable to read %s.", filename), e);
             } finally {
                 IOUtils.closeQuietly(reader);
             }
+            
         }
+
     }
 
 }

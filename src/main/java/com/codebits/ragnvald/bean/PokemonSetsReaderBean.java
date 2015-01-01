@@ -23,7 +23,6 @@ public class PokemonSetsReaderBean {
     private final String filename = null;
 
     private final Charset charset = Charset.defaultCharset();
-    @Getter private int recordCount = 0;
     
     @PostConstruct
     public void read() {
@@ -41,7 +40,6 @@ public class PokemonSetsReaderBean {
                 set.setName(component[1]);
                 set.setCount(Integer.parseInt(component[2]));
                 pokomonSetRepository.save(set);
-                recordCount++;
             }
 
         } catch (FileNotFoundException e) {
