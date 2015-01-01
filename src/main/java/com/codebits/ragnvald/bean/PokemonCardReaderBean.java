@@ -1,8 +1,9 @@
 package com.codebits.ragnvald.bean;
 
 import com.codebits.ragnvald.domain.Inventory;
+import com.codebits.ragnvald.domain.PokemonCard;
 import com.codebits.ragnvald.domain.PokemonSet;
-import com.codebits.ragnvald.repository.InventoryRepository;
+import com.codebits.ragnvald.repository.PokemonCardRepository;
 import com.codebits.ragnvald.repository.PokomonSetRepository;
 import com.google.common.base.Preconditions;
 import java.io.BufferedReader;
@@ -17,15 +18,15 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 
-public class InventoryReaderBean {
+public class PokemonCardReaderBean {
 
-    private final static Logger log = Logger.getLogger(InventoryReaderBean.class);
+    private final static Logger log = Logger.getLogger(PokemonCardReaderBean.class);
     
     @Autowired
     private final PokomonSetRepository pokomonSetRepository = null;
 
     @Autowired
-    private final InventoryRepository inventoryRepository = null;
+    private final PokemonCardRepository pokemonCardRepository = null;
 
     private final Charset charset = Charset.defaultCharset();
 
@@ -38,8 +39,8 @@ public class InventoryReaderBean {
             if (set.getNumber() == -1) {
                 continue;
             }
-            String filename = String.format("inventory/%03d.%s.set", set.getNumber(), set.getRootName());
-            String masterFilename = String.format("inventory/%03d.master.%s.set", set.getNumber(), set.getRootName());
+            String filename = String.format("cards/%03d.%s.set", set.getNumber(), set.getRootName());
+            String masterFilename = String.format("cards/%03d.master.%s.set", set.getNumber(), set.getRootName());
             BufferedReader reader = null;
             String line;
 
@@ -60,10 +61,10 @@ public class InventoryReaderBean {
             Preconditions.checkNotNull(reader, "Reader should not be null.");
             
             try {
-                log.info("Reading inventory set: " + set.getRootName());
+                log.info("Reading card set: " + set.getRootName());
                 while ((line = reader.readLine()) != null) {
-                    Inventory inventory = new Inventory(set.getRootName(), line);
-                    inventoryRepository.save(inventory);
+                    PokemonCard card = new PokemonCard(set.getRootName(), line);
+                    pokemonCardRepository.save(card);
                 }
             } catch (IOException e) {
                 throw new RuntimeException(String.format("Unable to read %s.", filename), e);
