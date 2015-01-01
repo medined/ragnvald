@@ -1,23 +1,27 @@
 package com.codebits.ragnvald.bean;
 
 import com.codebits.ragnvald.domain.PokemonSet;
-import com.codebits.ragnvald.repository.PokomonSetRepository;
+import com.codebits.ragnvald.repository.PokemonSetRepository;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import javax.annotation.PostConstruct;
-import lombok.Getter;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 
-public class PokemonSetsReaderBean {
+/** Read a comma-delimited file with information about each
+ * Pokemon set.
+ * 
+ * @author medined
+ */
+public class PokemonSetsReader {
 
     @Autowired
-    private final PokomonSetRepository pokomonSetRepository = null;
+    private final PokemonSetRepository pokomonSetRepository = null;
 
     @Value("${csv.pokemon.set}")
     private final String filename = null;

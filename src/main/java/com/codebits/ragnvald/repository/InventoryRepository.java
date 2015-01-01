@@ -14,4 +14,6 @@ public interface InventoryRepository extends CrudRepository<Inventory, Long> {
     Inventory findByPokemonSetRootNameAndPokemonCardId(final String pokemonSetRootName, final String pokemonCardId);
 
     List<Inventory> findByPokemonSetRootName(final String pokemonSetRootName);
+    
+    public Long countByPokemonSetRootName(final String pokemonSetRootName);
 }

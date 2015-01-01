@@ -1,8 +1,8 @@
 package com.codebits.ragnvald;
 
-import com.codebits.ragnvald.bean.InventoryReaderBean;
-import com.codebits.ragnvald.bean.PokemonCardReaderBean;
-import com.codebits.ragnvald.bean.PokemonSetsReaderBean;
+import com.codebits.ragnvald.bean.InventoryReader;
+import com.codebits.ragnvald.bean.PokemonCardReader;
+import com.codebits.ragnvald.bean.PokemonSetsReader;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.embedded.ServletRegistrationBean;
@@ -18,8 +18,8 @@ public class Application {
     }
 
     @Bean(name="pokemonSetsReaderBean")
-    public PokemonSetsReaderBean getPokemonSetsReaderBean() {
-        return new PokemonSetsReaderBean();
+    public PokemonSetsReader getPokemonSetsReaderBean() {
+        return new PokemonSetsReader();
     }
     
     /*
@@ -28,8 +28,8 @@ public class Application {
      */
     @Bean(name="pokemonCardReaderBean")
     @DependsOn("pokemonSetsReaderBean")
-    public PokemonCardReaderBean getPokemonCardReaderBean() {
-        return new PokemonCardReaderBean();
+    public PokemonCardReader getPokemonCardReaderBean() {
+        return new PokemonCardReader();
     }
     
     /*
@@ -38,8 +38,8 @@ public class Application {
      */
     @Bean(name="inventoryReaderBean")
     @DependsOn("pokemonCardReaderBean")
-    public InventoryReaderBean getInventoryReaderBean() {
-        return new InventoryReaderBean();
+    public InventoryReader getInventoryReaderBean() {
+        return new InventoryReader();
     }
     
     @Bean

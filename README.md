@@ -34,7 +34,7 @@ firefox http://localhost:8080/console
 
 Use the following information to connect to the in-memory database:
 
- URL: jdbc:h2:mem:testdb
+URL: jdbc:h2:mem:testdb
 USER: sa
 PASSWORD: {blank}
 

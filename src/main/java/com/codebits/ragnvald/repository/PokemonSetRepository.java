@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PokomonSetRepository extends CrudRepository<PokemonSet, Long> {
+public interface PokemonSetRepository extends CrudRepository<PokemonSet, Long> {
 
     @Override
     List<PokemonSet> findAll();

@@ -13,6 +13,7 @@
     <ul>
         <li><a href="/console" target="">Database Console</a></li>
         <li><a href="/pokemonsets" target="">Pokemon Set Management</a></li>
+        <li><a href="/missingcards" target="">Missing Cards</a></li>
     </ul>
 
     <div id="footer">

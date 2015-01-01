@@ -10,4 +10,8 @@ public interface PokemonCardRepository extends CrudRepository<PokemonCard, Long>
 
     @Override
     List<PokemonCard> findAll();
+
+    List<PokemonCard> findByPokemonSetRootName(final String pokemonSetRootName);
+    
+    public Long countByPokemonSetRootName(final String pokemonSetRootName);
 }
