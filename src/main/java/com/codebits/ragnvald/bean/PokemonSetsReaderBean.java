@@ -1,4 +1,4 @@
-package com.codebits.ragnvald.service;
+package com.codebits.ragnvald.bean;
 
 import com.codebits.ragnvald.domain.PokemonSet;
 import com.codebits.ragnvald.repository.PokomonSetRepository;
@@ -13,10 +13,8 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.stereotype.Service;
 
-@Service
-public class PokemonSetsCsvReader {
+public class PokemonSetsReaderBean {
 
     @Autowired
     private final PokomonSetRepository pokomonSetRepository = null;
@@ -29,7 +27,6 @@ public class PokemonSetsCsvReader {
     
     @PostConstruct
     public void read() {
-        
         BufferedReader reader = null;
         String line;
         String cvsSplitBy = ",";
