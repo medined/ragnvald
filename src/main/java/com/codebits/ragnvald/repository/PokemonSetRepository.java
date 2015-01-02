@@ -11,5 +11,5 @@ public interface PokemonSetRepository extends CrudRepository<PokemonSet, Long> {
     @Override
     List<PokemonSet> findAll();
 
-    PokemonSet findByNameAllIgnoringCase(String name);
+    PokemonSet findByName(String name);
 }

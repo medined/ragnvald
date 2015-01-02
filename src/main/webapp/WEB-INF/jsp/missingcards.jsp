@@ -28,7 +28,11 @@
             <c:forEach items="${pokemonSetRepository.findAll()}" var="set">
                 <tr>
                     <td valign="top"><img src='images/<fmt:formatNumber pattern="000" value="${set.number}" />.png' height='20' width='20'/></td>
-                    <td valign="top"><fmt:formatNumber pattern="000" value="${set.number}" />: <c:out value="${set.name}" /></td>
+                    <td valign="top">
+                        <fmt:formatNumber pattern="000" value="${set.number}" />: 
+                        <c:if test="${set.master}">MASTER</c:if>
+                        <c:out value="${set.name}" />
+                    </td>
                     <td valign="top"><c:out value="${inventoryRepository.countMissingCards(set.rootName)}"/></td>
                     <td valign="top"><c:forEach items="${inventoryRepository.findByPokemonSetRootName(set.rootName)}" var="card"><c:if test="${card.count < 1}"><c:out escapeXml="false" value="${displayAdapter.card(card)}" /> </c:if></c:forEach></td>
                 </tr>

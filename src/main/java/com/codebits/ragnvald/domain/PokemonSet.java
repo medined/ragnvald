@@ -55,6 +55,14 @@ public class PokemonSet implements Serializable {
     @Getter
     @Setter
     private Integer count;
+    
+    /** True if we have the master list of card ids for this set.
+     * 
+     * @return true if we have the master list.
+     */
+    @Getter
+    @Setter
+    private Boolean master;
 
     public String getRootName() {
         return getName().replaceAll(" ", "_").toLowerCase();
@@ -71,6 +79,7 @@ public class PokemonSet implements Serializable {
                 append("name", getName()).
                 append("rootName", getRootName()).
                 append("count", getCount()).
+                append("master", getMaster()).
                 toString();
     }
 

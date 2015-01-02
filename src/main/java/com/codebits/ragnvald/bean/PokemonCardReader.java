@@ -44,6 +44,8 @@ public class PokemonCardReader {
             } catch (FileNotFoundException e) {
                 try {
                     reader = new BufferedReader(new InputStreamReader(new ClassPathResource(masterFilename).getInputStream(), charset));
+                    set.setMaster(Boolean.TRUE);
+                    pokomonSetRepository.save(set);
                 } catch (FileNotFoundException e1) {
                     throw new RuntimeException(String.format("Unable to find %s or %s.", filename, masterFilename), e1);
                 } catch (IOException e1) {
