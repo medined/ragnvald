@@ -14,8 +14,12 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Component;
 
+@Component
+@DependsOn("pokemonSetsReader")
 public class PokemonCardReader {
 
     private final static Logger log = Logger.getLogger(PokemonCardReader.class);
@@ -55,13 +59,11 @@ public class PokemonCardReader {
                 throw new RuntimeException(String.format("Unable to read %s.", filename), e);
             }
 
-            Preconditions.checkNotNull(reader, "Reader should not be null.");
-
             /*
              * Ignore empty lines, most likely at the end of the files.
              */
             try {
-                log.info("Reading card set: " + set.getRootName());
+                log.info(String.format("Reading %s card set: %s", (set.getMaster() ? "MASTER" : ""), set.getRootName()));
                 while ((line = reader.readLine()) != null) {
                     if (line.isEmpty()) {
                         continue;

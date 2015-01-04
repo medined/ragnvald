@@ -62,7 +62,7 @@ public class PokemonSet implements Serializable {
      */
     @Getter
     @Setter
-    private Boolean master;
+    private Boolean master = Boolean.FALSE;
 
     public String getRootName() {
         return getName().replaceAll(" ", "_").toLowerCase();

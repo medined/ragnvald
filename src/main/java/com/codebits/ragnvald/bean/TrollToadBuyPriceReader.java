@@ -1,7 +1,9 @@
 package com.codebits.ragnvald.bean;
 
 import com.codebits.ragnvald.domain.PokemonSet;
+import com.codebits.ragnvald.domain.TrollToadBuyPrice;
 import com.codebits.ragnvald.repository.PokemonSetRepository;
+import com.codebits.ragnvald.repository.TrollToadBuyPriceRepository;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -9,6 +11,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import javax.annotation.PostConstruct;
 import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
@@ -20,12 +23,14 @@ import org.springframework.stereotype.Component;
  * @author medined
  */
 @Component
-public class PokemonSetsReader {
+public class TrollToadBuyPriceReader {
+
+    private final static Logger log = Logger.getLogger(TrollToadBuyPriceReader.class);
 
     @Autowired
-    private final PokemonSetRepository pokomonSetRepository = null;
+    private final TrollToadBuyPriceRepository trollToadBuyPriceRepository = null;
 
-    @Value("${csv.pokemon.set}")
+    @Value("${csv.troll.toad.buy.price}")
     private final String filename = null;
 
     private final Charset charset = Charset.defaultCharset();
@@ -41,13 +46,15 @@ public class PokemonSetsReader {
         
             while ((line = reader.readLine()) != null) {
                 String[] component = line.split(cvsSplitBy);
-                PokemonSet set = new PokemonSet();
-                set.setNumber(Integer.parseInt(component[0]));
-                set.setName(component[1]);
-                set.setCount(Integer.parseInt(component[2]));
-                pokomonSetRepository.save(set);
+                TrollToadBuyPrice set = new TrollToadBuyPrice();
+                set.setSetName(component[0]);
+                set.setCardEdition(component[1]);
+                set.setBuyPrice(component[3]);
+                trollToadBuyPriceRepository.save(set);
             }
 
+            log.info("Read Troll & Toad Buy Price list.");
+            
         } catch (FileNotFoundException e) {
             throw new RuntimeException(String.format("%s not found.", filename), e);
         } catch (IOException e) {

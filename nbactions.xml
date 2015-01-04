@@ -4,7 +4,7 @@
             <actionName>CUSTOM-run</actionName>
             <displayName>run</displayName>
             <goals>
-                <goal>spring-boot:run</goal>
+                <goal>clean spring-boot:run</goal>
             </goals>
         </action>
     </actions>

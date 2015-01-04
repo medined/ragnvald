@@ -16,8 +16,12 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Component;
 
+@Component
+@DependsOn("pokemonCardReader")
 public class InventoryReader {
 
     private final static Logger log = Logger.getLogger(InventoryReader.class);
