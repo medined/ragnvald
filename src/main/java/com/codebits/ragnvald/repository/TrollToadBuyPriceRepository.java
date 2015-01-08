@@ -10,4 +10,6 @@ public interface TrollToadBuyPriceRepository extends CrudRepository<TrollToadBuy
 
     @Override
     List<TrollToadBuyPrice> findAll();
+
+    List<TrollToadBuyPrice> findBySetName(final String trollSetName);
 }

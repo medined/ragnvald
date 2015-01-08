@@ -1,8 +1,6 @@
 package com.codebits.ragnvald.bean;
 
-import com.codebits.ragnvald.domain.PokemonSet;
 import com.codebits.ragnvald.domain.TrollToadBuyPrice;
-import com.codebits.ragnvald.repository.PokemonSetRepository;
 import com.codebits.ragnvald.repository.TrollToadBuyPriceRepository;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -20,9 +18,11 @@ import org.springframework.stereotype.Component;
 /** Read a comma-delimited file with information about each
  * Pokemon set.
  * 
+ * Reading an using the buy price list is put on hold.
+ * 
  * @author medined
  */
-@Component
+//@Component
 public class TrollToadBuyPriceReader {
 
     private final static Logger log = Logger.getLogger(TrollToadBuyPriceReader.class);
@@ -47,9 +47,12 @@ public class TrollToadBuyPriceReader {
             while ((line = reader.readLine()) != null) {
                 String[] component = line.split(cvsSplitBy);
                 TrollToadBuyPrice set = new TrollToadBuyPrice();
-                set.setSetName(component[0]);
-                set.setCardEdition(component[1]);
-                set.setBuyPrice(component[3]);
+                // remove quotes aroun the Troll and Toad set name.
+                String trollSetName = component[1].substring(1, component[1].length()-1);
+                //System.out.println("[" + trollSetName + "]");
+                set.setSetName(trollSetName);
+                set.setCardEdition(component[2]);
+                set.setBuyPrice(component[4]);
                 trollToadBuyPriceRepository.save(set);
             }
 
