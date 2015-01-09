@@ -33,8 +33,16 @@
                         <c:if test="${set.master}">MASTER</c:if>
                         <c:out value="${set.name}" />
                     </td>
-                    <td valign="top"><c:out value="${inventoryRepository.countMissingCards(set.rootName)}"/></td>
-                    <td valign="top"><c:forEach items="${inventoryRepository.findByPokemonSetRootName(set.rootName)}" var="card"><c:if test="${card.count < 1}"><c:out escapeXml="false" value="${displayAdapter.card(card)}" /> </c:if></c:forEach></td>
+                    <td valign="top">
+                        <c:out value="${missingCardCounter.countMissingCards(set.rootName)}"/>
+                        /
+                        <c:out value="${missingCardCounter.fullSetSize(set.rootName)}"/>
+                    </td>
+                    <td valign="top">
+                        <c:forEach items="${inventoryRepository.findByPokemonSetRootName(set.rootName)}" var="card">
+                            <c:if test="${card.count < 1}"><c:out escapeXml="false" value="${displayAdapter.card(card)}" /> </c:if>
+                        </c:forEach>
+                    </td>
                 </tr>
             </c:forEach>
         </table>
