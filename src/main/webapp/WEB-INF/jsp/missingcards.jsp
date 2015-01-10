@@ -26,6 +26,7 @@
                 <th>Missing Cards</th>
             </tr>
             <c:forEach items="${pokemonSetRepository.findAll()}" var="set">
+                    <c:if test="${set.number != -1}">
                 <tr>
                     <td valign="top"><img src='images/<fmt:formatNumber pattern="000" value="${set.number}" />.png' height='20' width='20'/></td>
                     <td valign="top">
@@ -33,23 +34,16 @@
                         <c:if test="${set.master}">MASTER</c:if>
                         <c:out value="${set.name}" />
                     </td>
-                    <td valign="top">
+                    <td valign="top" style="font-size: 10px">
                         <c:out value="${missingCardCounter.countMissingCards(set.rootName)}"/>
                         /
                         <c:out value="${missingCardCounter.fullSetSize(set.rootName)}"/>
                     </td>
-                    <td valign="top">
-                        <c:forEach items="${inventoryRepository.findByPokemonSetRootName(set.rootName)}" var="card">
-                            <c:if test="${card.count < 1}"><c:out escapeXml="false" value="${displayAdapter.card(card)}" /> </c:if>
-                        </c:forEach>
-                    </td>
+                    <td valign="top" style="font-size: 12px">${missingCardCounter.missingCards(set.rootName)}</td>
                 </tr>
+                </c:if>
             </c:forEach>
         </table>
     </table>
-
-    <!--
-    <b>001</b> <b>002</b> <b>003</b> <b>004</b> <b>005</b> <b>006</b> <b>007</b> <b>008</b> <b>009</b> <b>010</b> <b>011</b> <b>012</b> <b>013</b> <b>014</b> <b>015</b> <b>016</b> <b>017</b> <b>018</b> <b>019</b> <b>021</b> <b>036</b> <b>037</b> <b>049</b> <b>055</b> <b>056</b> <b>063</b> <b>064</b> <b>070</b> <b>071</b> <b>072</b> <b>073</b> <b>074</b> <b>076</b> <b>077</b> <b>078</b> <b>079</b> <b>082</b> <b>089</b> <b>096</b> <b>100</b> <b>102</b>
-    -->
 </body>
 </html>

@@ -21,16 +21,7 @@ public class FullSetAdapter {
         this.pokemonSetRepository = pokemonSetRepository;
         this.pokemonCardRepository = pokemonCardRepository;
         this.inventoryRepository = inventoryRepository;
-        calculate();
-    }
-
-    final Map<String, List<PokemonCard>> fullSets = new HashMap<>();
-    
-    public List<PokemonCard> getFullSet(final String setRootName) {
-        return fullSets.get(setRootName);
-    }
-
-    public void calculate() {
+        
         for (PokemonSet pokemonSet : pokemonSetRepository.findAll()) {
             List<PokemonCard> fullCardSet = pokemonCardRepository.findByPokemonSetRootName(pokemonSet.getRootName());
             List<PokemonCard> cards = new ArrayList(fullCardSet);
@@ -49,6 +40,13 @@ public class FullSetAdapter {
             fullSets.put(pokemonSet.getRootName(), cards);
         }
     }
+
+    final Map<String, List<PokemonCard>> fullSets = new HashMap<>();
+    
+    public List<PokemonCard> getFullSet(final String setRootName) {
+        return fullSets.get(setRootName);
+    }
+
 
     private boolean isCardinSet(List<PokemonCard> cards, String cardNumber) {
         boolean rv = false;
