@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.PostConstruct;
 
 public class FullSetAdapter {
     
@@ -32,9 +31,9 @@ public class FullSetAdapter {
                     removeCardFromSet(cards, cardNumber + "H");
                     removeCardFromSet(cards, cardNumber + "R");
                 }
-                // when we see 001H 002H, remove the H card.
-                if (isCardinSet(cards, cardNumber + "R")) {
-                    removeCardFromSet(cards, cardNumber + "H");
+                // when we see 001H 002H, remove the R card.
+                if (isCardinSet(cards, cardNumber + "H")) {
+                    removeCardFromSet(cards, cardNumber + "R");
                 }
             }
             fullSets.put(pokemonSet.getRootName(), cards);
