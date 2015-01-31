@@ -3,6 +3,7 @@ package com.codebits.ragnvald.controller;
 import com.codebits.ragnvald.bean.InventoryDisplayAdapter;
 import com.codebits.ragnvald.bean.FullSetAdapter;
 import com.codebits.ragnvald.bean.MissingCardCounter;
+import com.codebits.ragnvald.domain.PokemonSet;
 import com.codebits.ragnvald.repository.InventoryRepository;
 import com.codebits.ragnvald.repository.PokemonCardRepository;
 import com.codebits.ragnvald.repository.PokemonSetRepository;
@@ -37,9 +38,21 @@ public class MissingCardsController {
         FullSetAdapter fullSetAdapter = new FullSetAdapter(pokemonSetRepository, pokemonCardRepository, inventoryRepository);
         MissingCardCounter missingCardCounter = new MissingCardCounter(inventoryRepository, fullSetAdapter);
         
+        int cardsInInventory = inventoryRepository.countCards().intValue();
+        int cardsInMasterSets = 0;
+        int cardsInFullSets = 0;
+        for (PokemonSet set : pokemonSetRepository.findAll()) {
+            cardsInFullSets += fullSetAdapter.getFullSet(set.getRootName()).size();
+            cardsInMasterSets += pokemonCardRepository.countByPokemonSetRootName(set.getRootName());
+        }
+        
         model.put("missingCardCounter", missingCardCounter);
         model.put("inventoryRepository", inventoryRepository);
         model.put("pokemonSetRepository", pokemonSetRepository);
+        model.put("cardsInInventory", String.format("%,04d", cardsInInventory));
+        model.put("cardsInFullSets", String.format("%,04d", cardsInFullSets));
+        model.put("percentOfFullSets", String.format("%,04d", cardsInInventory / cardsInFullSets));
+        model.put("cardsInMasterSets", String.format("%,04d", cardsInMasterSets));
         model.put("displayAdapter", new InventoryDisplayAdapter());
         return "missingcards";
     }

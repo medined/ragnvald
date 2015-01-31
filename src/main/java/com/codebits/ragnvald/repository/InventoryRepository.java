@@ -19,4 +19,7 @@ public interface InventoryRepository extends CrudRepository<Inventory, Long> {
     
     @Query("select count(t.id) from #{#entityName} t where t.pokemonSetRootName = :name and t.count = 0")
     public Long countMissingCards(@Param("name") final String pokemonSetRootName);
+
+    @Query("select count(t.id) from #{#entityName} t where t.count > 0")
+    public Long countCards();
 }

@@ -17,7 +17,12 @@
     </head>
     <body>
         <%@include file="header.jsp" %>
-        <h1>Missing Pokemon Cards</h1>
+        <h1>Pokemon Card Report</h1>
+        <table><tr>
+        <td>Cards in Inventory: ${cardsInInventory}</td>
+        <td width="50"></td>
+        <td>Cards in Full Sets: ${cardsInFullSets}</td>
+        </tr></table>
         <table border="1">
             <tr>
                 <th>Icon</th>
