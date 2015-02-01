@@ -56,6 +56,21 @@ public class MissingCardCounter {
         }
         return buffer.toString();
     }
+
+   public String ownedCards(final String setRootName) {
+        StringBuilder buffer = new StringBuilder();
+        
+        List<PokemonCard> fullSet = fullSetAdapter.getFullSet(setRootName);
+        List<Inventory> inventorySet = inventoryRepository.findByPokemonSetRootName(setRootName);
+        
+        for (Inventory inventory : inventorySet) {
+            if (inventory.getCount() > 0) {
+                buffer.append(inventory.getPokemonCardId());
+                buffer.append(" ");
+            }
+        }
+        return buffer.toString();
+    }
     
     private boolean isCardinFullSet(List<PokemonCard> cards, String cardNumber) {
         boolean rv = false;

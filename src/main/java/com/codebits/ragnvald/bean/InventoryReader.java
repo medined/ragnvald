@@ -13,11 +13,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import javax.annotation.PostConstruct;
+import javax.persistence.NonUniqueResultException;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -53,6 +55,7 @@ public class InventoryReader {
             String masterFilename = String.format("inventory/%03d.master.%s.set", set.getNumber(), set.getRootName());
             BufferedReader reader = null;
             String line;
+            Inventory inventory = null;
 
             try {
                 reader = new BufferedReader(new InputStreamReader(new ClassPathResource(filename).getInputStream(), charset));
@@ -76,7 +79,11 @@ public class InventoryReader {
                     if (line.isEmpty()) {
                         continue;
                     }
-                    Inventory inventory = inventoryRepository.findByPokemonSetRootNameAndPokemonCardId(set.getRootName(), line);
+                    try {
+                        inventory = inventoryRepository.findByPokemonSetRootNameAndPokemonCardId(set.getRootName(), line);
+                    } catch (IncorrectResultSizeDataAccessException e) {
+                        log.error(String.format("Inventory Error. Found more than one card in inventory for set[%s] and card[%s]", set.getRootName(), line));
+                    }
                     if (inventory == null) {
                         log.error(String.format("Inventory Error. Unable to find card %s in set %s", line, set.getRootName()));
                     } else {

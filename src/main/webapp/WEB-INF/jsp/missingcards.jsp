@@ -44,7 +44,25 @@
                         /
                         <c:out value="${missingCardCounter.fullSetSize(set.rootName)}"/>
                     </td>
-                    <td valign="top" style="font-size: 12px">${missingCardCounter.missingCards(set.rootName)}</td>
+                    <td valign="top" style="font-size: 12px">
+                        <c:choose>
+                            <c:when test="${set.master}">
+                               ${missingCardCounter.missingCards(set.rootName)}
+                            </c:when>
+                            <c:otherwise>
+                                <table>
+                                    <tr>
+                                        <td valign="top">Missing</td>
+                                        <td>${missingCardCounter.missingCards(set.rootName)}</td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="top">Owned</td>
+                                        <td>${missingCardCounter.ownedCards(set.rootName)}</td>
+                                    </tr>
+                                </table>
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
                 </tr>
                 </c:if>
             </c:forEach>
