@@ -12,7 +12,7 @@ if [ "${ARTIFACTORY_COUNT}" != "1" ]
 then
   echo "Starting Artifactory"
   mkdir -p /data/artifactory/data /data/logs/artifactory
-  docker run --name "artifactorydata" -v /data/artifcatory/data:/opt/artifactory/data -v /data/logs/artifactory:/opt/artifactory/logs tianon/true
+  docker run --name "artifactorydata" -v /data/artifactory/data:/opt/artifactory/data -v /data/logs/artifactory:/opt/artifactory/logs tianon/true
   docker run -d -p 8081:8081 --name "artifactory" --volumes-from artifactorydata  codingtony/artifactory
 fi
 
