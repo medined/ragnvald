@@ -1,0 +1,11 @@
+mysql:
+  image: mysql:latest
+  environment:
+    MYSQL_DATABASE: sample
+    MYSQL_USER: mysql
+    MYSQL_PASSWORD: mysql
+    MYSQL_ROOT_PASSWORD: supersecret
+  ports:
+    - "3306:3306"
+
+
