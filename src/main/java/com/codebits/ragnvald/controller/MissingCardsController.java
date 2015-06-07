@@ -28,6 +28,12 @@ public class MissingCardsController {
     @Autowired
     private final PokemonSetRepository pokemonSetRepository = null;
 
+    @Autowired
+    private final FullSetAdapter fullSetAdapter = null;
+
+    @Autowired
+    private final MissingCardCounter missingCardCounter = null;
+
     @RequestMapping("/missingcards")
     public String index(Map<String, Object> model) {
 
@@ -35,9 +41,6 @@ public class MissingCardsController {
         breadcrumbService.getBreadcrumbs().put("Home", "/");
         model.put("breadcrumbs", breadcrumbService.getBreadcrumbs());
 
-        FullSetAdapter fullSetAdapter = new FullSetAdapter(pokemonSetRepository, pokemonCardRepository, inventoryRepository);
-        MissingCardCounter missingCardCounter = new MissingCardCounter(inventoryRepository, fullSetAdapter);
-        
         int cardsInInventory = inventoryRepository.countCards().intValue();
         int cardsInMasterSets = 0;
         int cardsInFullSets = 0;

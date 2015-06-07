@@ -4,16 +4,22 @@ import com.codebits.ragnvald.domain.Inventory;
 import com.codebits.ragnvald.domain.PokemonCard;
 import com.codebits.ragnvald.repository.InventoryRepository;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class MissingCardCounter {
 
-    FullSetAdapter fullSetAdapter = null;
+    @Autowired
+    private FullSetAdapter fullSetAdapter = null;
 
-    InventoryRepository inventoryRepository = null;
+    @Autowired
+    private InventoryRepository inventoryRepository = null;
 
+    public MissingCardCounter() {
+    }
+    
     public MissingCardCounter(final InventoryRepository inventoryRepository, final FullSetAdapter fullSetAdapter) {
-        this.fullSetAdapter = fullSetAdapter;
         this.inventoryRepository = inventoryRepository;
+        this.fullSetAdapter = fullSetAdapter;
     }
     
     public int fullSetSize(final String setRootName) {
@@ -31,11 +37,6 @@ public class MissingCardCounter {
         return rv;
     }
 
-    /* Add bold html tag around cards missing from the full set. The
-     * Inventory lists hold an entry for every card in the master set. 
-     * Missing cards have count equal to zero.
-     *
-    */
     public String missingCards(final String setRootName) {
         StringBuilder buffer = new StringBuilder();
         

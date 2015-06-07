@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import javax.annotation.PostConstruct;
-import javax.persistence.NonUniqueResultException;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +28,22 @@ public class InventoryReader {
     private final static Logger log = Logger.getLogger(InventoryReader.class);
     
     @Autowired
-    private final PokemonSetRepository pokomonSetRepository = null;
+    private PokemonSetRepository pokomonSetRepository = null;
 
     @Autowired
-    private final PokemonCardRepository pokemonCardRepository = null;
+    private PokemonCardRepository pokemonCardRepository = null;
 
     @Autowired
-    private final InventoryRepository inventoryRepository = null;
+    private InventoryRepository inventoryRepository = null;
+
+    public InventoryReader() {
+    }
+
+    public InventoryReader(final PokemonSetRepository pokomonSetRepository, final PokemonCardRepository pokemonCardRepository, final InventoryRepository inventoryRepository) {
+        this.pokomonSetRepository = pokomonSetRepository;
+        this.pokemonCardRepository = pokemonCardRepository;
+        this.inventoryRepository = inventoryRepository;
+    }
 
     private final Charset charset = Charset.defaultCharset();
 

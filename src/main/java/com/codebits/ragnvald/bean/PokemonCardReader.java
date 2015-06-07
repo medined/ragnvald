@@ -5,7 +5,6 @@ import com.codebits.ragnvald.domain.PokemonSet;
 import com.codebits.ragnvald.repository.PokemonCardRepository;
 import com.codebits.ragnvald.repository.PokemonSetRepository;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -25,11 +24,19 @@ public class PokemonCardReader {
     private final static Logger log = Logger.getLogger(PokemonCardReader.class);
     
     @Autowired
-    private final PokemonSetRepository pokomonSetRepository = null;
+    private PokemonSetRepository pokomonSetRepository = null;
 
     @Autowired
-    private final PokemonCardRepository pokemonCardRepository = null;
+    private PokemonCardRepository pokemonCardRepository = null;
 
+    public PokemonCardReader() {
+    }
+    
+    public PokemonCardReader(final PokemonSetRepository pokomonSetRepository, final PokemonCardRepository pokemonCardRepository) {
+        this.pokomonSetRepository = pokomonSetRepository;
+        this.pokemonCardRepository = pokemonCardRepository;
+    }
+    
     private final Charset charset = Charset.defaultCharset();
 
     @PostConstruct

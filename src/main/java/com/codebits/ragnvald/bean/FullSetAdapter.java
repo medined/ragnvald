@@ -2,25 +2,37 @@ package com.codebits.ragnvald.bean;
 
 import com.codebits.ragnvald.domain.PokemonCard;
 import com.codebits.ragnvald.domain.PokemonSet;
-import com.codebits.ragnvald.repository.InventoryRepository;
 import com.codebits.ragnvald.repository.PokemonCardRepository;
 import com.codebits.ragnvald.repository.PokemonSetRepository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class FullSetAdapter {
-    
-    InventoryRepository inventoryRepository = null;
-    PokemonSetRepository pokemonSetRepository = null;
-    PokemonCardRepository pokemonCardRepository = null;
 
-    public FullSetAdapter(final PokemonSetRepository pokemonSetRepository, final PokemonCardRepository pokemonCardRepository, final InventoryRepository inventoryRepository) {
+    @Autowired
+    private PokemonSetRepository pokemonSetRepository = null;
+
+    @Autowired
+    private PokemonCardRepository pokemonCardRepository = null;
+
+    private final Map<String, List<PokemonCard>> fullSets = new HashMap<>();
+
+    public FullSetAdapter() {
+    }
+
+    public FullSetAdapter(final PokemonSetRepository pokemonSetRepository, final PokemonCardRepository pokemonCardRepository) {
         this.pokemonSetRepository = pokemonSetRepository;
         this.pokemonCardRepository = pokemonCardRepository;
-        this.inventoryRepository = inventoryRepository;
-        
+    }
+
+    @PostConstruct
+    public void init() {
         for (PokemonSet pokemonSet : pokemonSetRepository.findAll()) {
             List<PokemonCard> fullCardSet = pokemonCardRepository.findByPokemonSetRootName(pokemonSet.getRootName());
             List<PokemonCard> cards = new ArrayList(fullCardSet);
@@ -39,13 +51,10 @@ public class FullSetAdapter {
             fullSets.put(pokemonSet.getRootName(), cards);
         }
     }
-
-    final Map<String, List<PokemonCard>> fullSets = new HashMap<>();
     
     public List<PokemonCard> getFullSet(final String setRootName) {
         return fullSets.get(setRootName);
     }
-
 
     private boolean isCardinSet(List<PokemonCard> cards, String cardNumber) {
         boolean rv = false;
@@ -68,5 +77,5 @@ public class FullSetAdapter {
             cards.remove(cardToDelete);
         }
     }
-    
+
 }

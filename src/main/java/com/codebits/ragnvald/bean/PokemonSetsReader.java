@@ -10,28 +10,36 @@ import java.nio.charset.Charset;
 import javax.annotation.PostConstruct;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
-/** Read a comma-delimited file with information about each
- * Pokemon set.
- * 
- * @author medined
+/** Read a comma-delimited file with information about each Pokemon set.
  */
 @Component
+@PropertySource("classpath:application.properties")
 public class PokemonSetsReader {
 
     @Autowired
-    private final PokemonSetRepository pokomonSetRepository = null;
+    private Environment env;
 
-    @Value("${csv.pokemon.set}")
-    private final String filename = null;
+    @Autowired
+    private PokemonSetRepository pokomonSetRepository = null;
 
+    public PokemonSetsReader() {
+    }
+    
+    public PokemonSetsReader(final PokemonSetRepository pokomonSetRepository) {
+        this.pokomonSetRepository = pokomonSetRepository;
+    }
+    
     private final Charset charset = Charset.defaultCharset();
     
     @PostConstruct
     public void read() {
+        String filename = env.getProperty("csv.pokemon.set");
+
         BufferedReader reader = null;
         String line;
         String cvsSplitBy = ",";

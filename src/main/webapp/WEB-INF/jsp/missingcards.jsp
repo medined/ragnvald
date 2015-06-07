@@ -17,56 +17,5 @@
     </head>
     <body>
         <%@include file="header.jsp" %>
-        <h1>Pokemon Card Report</h1>
-        <table><tr>
-        <td>Cards in Inventory: ${cardsInInventory}</td>
-        <td width="50"></td>
-        <td>Cards in Full Sets: ${cardsInFullSets}</td>
-        </tr></table>
-        <table border="1">
-            <tr>
-                <th>Icon</th>
-                <th width="100px">Set</th>
-                <th>Missing Count</th>
-                <th>Missing Cards</th>
-            </tr>
-            <c:forEach items="${pokemonSetRepository.findAll()}" var="set">
-                    <c:if test="${set.number != -1}">
-                <tr>
-                    <td valign="top"><img src='images/<fmt:formatNumber pattern="000" value="${set.number}" />.png' height='20' width='20'/></td>
-                    <td valign="top">
-                        <fmt:formatNumber pattern="000" value="${set.number}" />: 
-                        <c:if test="${set.master}">MASTER</c:if>
-                        <c:out value="${set.name}" />
-                    </td>
-                    <td valign="top" style="font-size: 10px">
-                        <c:out value="${missingCardCounter.countMissingCards(set.rootName)}"/>
-                        /
-                        <c:out value="${missingCardCounter.fullSetSize(set.rootName)}"/>
-                    </td>
-                    <td valign="top" style="font-size: 12px">
-                        <c:choose>
-                            <c:when test="${set.master}">
-                               ${missingCardCounter.missingCards(set.rootName)}
-                            </c:when>
-                            <c:otherwise>
-                                <table>
-                                    <tr>
-                                        <td valign="top">Missing</td>
-                                        <td>${missingCardCounter.missingCards(set.rootName)}</td>
-                                    </tr>
-                                    <tr>
-                                        <td valign="top">Owned</td>
-                                        <td>${missingCardCounter.ownedCards(set.rootName)}</td>
-                                    </tr>
-                                </table>
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
-                </tr>
-                </c:if>
-            </c:forEach>
-        </table>
-    </table>
 </body>
 </html>
