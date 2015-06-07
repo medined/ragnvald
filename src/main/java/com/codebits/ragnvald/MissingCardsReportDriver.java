@@ -1,5 +1,8 @@
 package com.codebits.ragnvald;
 
+import com.codebits.ragnvald.repository.InMemoryInventoryRepository;
+import com.codebits.ragnvald.repository.InMemoryPokemonSetRepository;
+import com.codebits.ragnvald.repository.InMemoryPokemonCardRepository;
 import com.codebits.ragnvald.bean.FullSetAdapter;
 import com.codebits.ragnvald.bean.InventoryReader;
 import com.codebits.ragnvald.bean.MissingCardCounter;
@@ -62,15 +65,15 @@ public class MissingCardsReportDriver {
         System.out.println("inventoryRepository: " + inventoryRepository.count());
 
         int cardsInInventory = inventoryRepository.countCards().intValue();
-        int cardsInMasterSets = 0;
-        int cardsInFullSets = 0;
+        //int cardsInMasterSets = 0;
+        //int cardsInFullSets = 0;
         for (PokemonSet set : pokemonSetRepository.findAll()) {
             List<PokemonCard> fullSet = fullSetAdapter.getFullSet(set.getRootName());
             if (fullSet == null) {
                 continue;
             }
-            cardsInFullSets += fullSet.size();
-            cardsInMasterSets += pokemonCardRepository.countByPokemonSetRootName(set.getRootName());
+            //cardsInFullSets += fullSet.size();
+            //cardsInMasterSets += pokemonCardRepository.countByPokemonSetRootName(set.getRootName());
         }
         
         StringBuilder sb = new StringBuilder();

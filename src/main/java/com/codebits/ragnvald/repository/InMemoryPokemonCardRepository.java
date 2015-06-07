@@ -1,4 +1,4 @@
-package com.codebits.ragnvald;
+package com.codebits.ragnvald.repository;
 
 import com.codebits.ragnvald.domain.PokemonCard;
 import com.codebits.ragnvald.repository.PokemonCardRepository;

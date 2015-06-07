@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
 public class InventoryReader {
 
     private final static Logger log = Logger.getLogger(InventoryReader.class);
-    
+
     @Autowired
     private PokemonSetRepository pokomonSetRepository = null;
 
@@ -60,28 +60,13 @@ public class InventoryReader {
                 continue;
             }
             String filename = String.format("inventory/%03d.%s.set", set.getNumber(), set.getRootName());
-            String masterFilename = String.format("inventory/%03d.master.%s.set", set.getNumber(), set.getRootName());
             BufferedReader reader = null;
             String line;
             Inventory inventory = null;
 
             try {
                 reader = new BufferedReader(new InputStreamReader(new ClassPathResource(filename).getInputStream(), charset));
-            } catch (FileNotFoundException e) {
-                try {
-                    reader = new BufferedReader(new InputStreamReader(new ClassPathResource(masterFilename).getInputStream(), charset));
-                } catch (FileNotFoundException e1) {
-                    throw new RuntimeException(String.format("Unable to find %s or %s.", filename, masterFilename), e1);
-                } catch (IOException e1) {
-                    throw new RuntimeException(String.format("Unable to read %s.", filename), e1);
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(String.format("Unable to read %s.", filename), e);
-            }
 
-            Preconditions.checkNotNull(reader, "Reader should not be null.");
-            
-            try {
                 log.info("Reading inventory set: " + set.getRootName());
                 while ((line = reader.readLine()) != null) {
                     if (line.isEmpty()) {
@@ -99,12 +84,13 @@ public class InventoryReader {
                         inventoryRepository.save(inventory);
                     }
                 }
+            } catch (FileNotFoundException e) {
             } catch (IOException e) {
                 throw new RuntimeException(String.format("Unable to read %s.", filename), e);
             } finally {
                 IOUtils.closeQuietly(reader);
             }
-            
+
         }
 
     }
