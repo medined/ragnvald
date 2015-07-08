@@ -75,8 +75,23 @@ public class MissingCardsReportDriver {
             //cardsInFullSets += fullSet.size();
             //cardsInMasterSets += pokemonCardRepository.countByPokemonSetRootName(set.getRootName());
         }
-        
+
         StringBuilder sb = new StringBuilder();
+        for (PokemonSet set : pokemonSetRepository.findAll()) {
+            if (set.getNumber() != -1) {
+                sb.append(set.getNumber());
+                sb.append(",");
+                sb.append(set.getRootName());
+                sb.append(",");
+                sb.append(missingCardCounter.missingCards(set.getRootName()));
+                sb.append("\n");
+            }
+        }
+        PrintWriter writer = new PrintWriter("missing.csv");
+        writer.print(sb.toString());
+        writer.close();
+        
+        sb = new StringBuilder();
         sb.append("<h1>Pokemon Card Report</h1>");
         sb.append("<table><tr>");
         sb.append(String.format("<td>Cards in Inventory: %,d</td>", cardsInInventory));
@@ -95,16 +110,16 @@ public class MissingCardsReportDriver {
                 sb.append("</td>");
                 sb.append("<td valign=\"top\" style=\"font-size: 12px\">");
                 if (set.getMaster()) {
-                    sb.append(missingCardCounter.missingCards(set.getRootName()));
+                    sb.append(missingCardCounter.missingCardsWithBold(set.getRootName()));
                 } else {
-                    sb.append(String.format("<table><tr><td valign=\"top\">Missing</td><td>%s</td></tr><tr><td valign=\"top\">Owned</td><td>%s</td></tr></table>", missingCardCounter.missingCards(set.getRootName()), missingCardCounter.ownedCards(set.getRootName())));
+                    sb.append(String.format("<table><tr><td valign=\"top\">Missing</td><td>%s</td></tr><tr><td valign=\"top\">Owned</td><td>%s</td></tr></table>", missingCardCounter.missingCardsWithBold(set.getRootName()), missingCardCounter.ownedCards(set.getRootName())));
                 }
                 sb.append("</td></tr>");
             }
         }
         sb.append("</table></table>");
         
-        PrintWriter writer = new PrintWriter("missing.html");
+        writer = new PrintWriter("missing.html");
         writer.print(sb.toString());
         writer.close();
     }

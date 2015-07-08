@@ -1,15 +1,16 @@
 package com.codebits.ragnvald.repository;
 
 import com.codebits.ragnvald.domain.Inventory;
-import com.codebits.ragnvald.repository.InventoryRepository;
 import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class InMemoryInventoryRepository implements InventoryRepository {
 
-    private final List<Inventory> cards = new ArrayList<>();
+    private final Set<Inventory> cards = new TreeSet<>();
     
     @Override
     public List<Inventory> findAll() {

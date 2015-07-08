@@ -1,15 +1,16 @@
 package com.codebits.ragnvald.repository;
 
 import com.codebits.ragnvald.domain.PokemonSet;
-import com.codebits.ragnvald.repository.PokemonSetRepository;
 import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class InMemoryPokemonSetRepository implements PokemonSetRepository {
 
-    private final List<PokemonSet> sets = new ArrayList<>();
+    private final Set<PokemonSet> sets = new TreeSet<>();
 
     @Override
     public List<PokemonSet> findAll() {

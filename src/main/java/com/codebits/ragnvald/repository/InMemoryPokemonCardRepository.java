@@ -1,15 +1,16 @@
 package com.codebits.ragnvald.repository;
 
 import com.codebits.ragnvald.domain.PokemonCard;
-import com.codebits.ragnvald.repository.PokemonCardRepository;
 import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class InMemoryPokemonCardRepository implements PokemonCardRepository {
 
-    private final List<PokemonCard> cards = new ArrayList<>();
+    private final Set<PokemonCard> cards = new TreeSet<>();
 
     @Override
     public List<PokemonCard> findAll() {

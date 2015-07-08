@@ -37,7 +37,15 @@ public class MissingCardCounter {
         return rv;
     }
 
+    public String missingCardsWithBold(final String setRootName) {
+        return missingCards(setRootName, true);
+    }
+
     public String missingCards(final String setRootName) {
+        return missingCards(setRootName, false);
+    }
+
+    public String missingCards(final String setRootName, final boolean addBold) {
         StringBuilder buffer = new StringBuilder();
         
         List<PokemonCard> fullSet = fullSetAdapter.getFullSet(setRootName);
@@ -45,11 +53,11 @@ public class MissingCardCounter {
         
         for (Inventory inventory : inventorySet) {
             if (inventory.getCount() == 0) {
-                if (isCardinFullSet(fullSet, inventory.getPokemonCardId())) {
+                if (addBold && isCardinFullSet(fullSet, inventory.getPokemonCardId())) {
                     buffer.append("<b>");
                 }
                 buffer.append(inventory.getPokemonCardId());
-                if (isCardinFullSet(fullSet, inventory.getPokemonCardId())) {
+                if (addBold && isCardinFullSet(fullSet, inventory.getPokemonCardId())) {
                     buffer.append("</b>");
                 }
                 buffer.append(" ");
@@ -58,7 +66,7 @@ public class MissingCardCounter {
         return buffer.toString();
     }
 
-   public String ownedCards(final String setRootName) {
+    public String ownedCards(final String setRootName) {
         StringBuilder buffer = new StringBuilder();
         
         List<PokemonCard> fullSet = fullSetAdapter.getFullSet(setRootName);

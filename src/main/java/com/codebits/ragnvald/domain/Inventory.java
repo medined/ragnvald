@@ -1,5 +1,6 @@
 package com.codebits.ragnvald.domain;
 
+import com.google.common.collect.ComparisonChain;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Entity
-public class Inventory implements Serializable {
+public class Inventory implements Comparable, Serializable {
 
     /**
      * Instantiate an object.
@@ -87,6 +88,14 @@ public class Inventory implements Serializable {
         int hash = 5;
         hash = 79 * hash + Objects.hashCode(getPokemonSetRootName())+ Objects.hashCode(getPokemonCardId());
         return hash;
+    }
+
+    @Override
+    public int compareTo(Object that) {
+        return ComparisonChain.start()
+         .compare(this.getPokemonSetRootName(), ((Inventory)that).getPokemonSetRootName())
+         .compare(this.getPokemonCardId(), ((Inventory)that).getPokemonCardId())
+         .result();
     }
 
 }
