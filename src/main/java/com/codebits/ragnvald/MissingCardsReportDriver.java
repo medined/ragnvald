@@ -59,12 +59,13 @@ public class MissingCardsReportDriver {
 
         FullSetAdapter fullSetAdapter = ctx.getBean(FullSetAdapter.class);
         MissingCardCounter missingCardCounter = ctx.getBean(MissingCardCounter.class);
+        int cardsInInventory = inventoryRepository.countCards().intValue();
+        long cardsInSets = pokemonCardRepository.count();
         
         System.out.println("pokemonSetRepository: " + pokemonSetRepository.count());
-        System.out.println("pokemonCardRepository: " + pokemonCardRepository.count());
-        System.out.println("inventoryRepository: " + inventoryRepository.count());
+        System.out.println("Cars in Sets: " + cardsInSets);
+        System.out.println("Cards In Collection: " + cardsInInventory);
 
-        int cardsInInventory = inventoryRepository.countCards().intValue();
         //int cardsInMasterSets = 0;
         //int cardsInFullSets = 0;
         for (PokemonSet set : pokemonSetRepository.findAll()) {
@@ -95,6 +96,8 @@ public class MissingCardsReportDriver {
         sb.append("<h1>Pokemon Card Report</h1>");
         sb.append("<table><tr>");
         sb.append(String.format("<td>Cards in Inventory: %,d</td>", cardsInInventory));
+        sb.append("<td width='75'>&nbsp;</td>");
+        sb.append(String.format("<td>Cards in Sets: %,d</td>", cardsInSets));
         sb.append("</tr></table>");
         sb.append("<table border=\"1\"><tr><th>Icon</th><th width=\"100px\">Set</th><th>Missing Count</th><th>Missing Cards</th></tr>");
         for (PokemonSet set : pokemonSetRepository.findAll()) {
