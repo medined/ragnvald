@@ -103,19 +103,16 @@ public class MissingCardsReportDriver {
         for (PokemonSet set : pokemonSetRepository.findAll()) {
             if (set.getNumber() != -1) {
                 sb.append(String.format("<tr><td valign=\"top\"><img src='src/main/resources/static/images/%03d.png' height='20' width='20'/></td>", set.getNumber()));
-                sb.append(String.format("<td valign=\"top\">%03d:", set.getNumber()));
+                sb.append(String.format("<td valign=\"top\" style=\"font-size: 10pt\">%03d:", set.getNumber()));
                 if (set.getMaster()) {
                     sb.append("MASTER ");
                 }
                 sb.append(String.format("%s</td>", set.getName()));
                 sb.append("<td valign=\"top\" style=\"font-size: 10px\">");
-                sb.append(String.format("%d / %d", missingCardCounter.countMissingCards(set.getRootName()), missingCardCounter.fullSetSize(set.getRootName())));
-                sb.append("</td>");
-                sb.append("<td valign=\"top\" style=\"font-size: 12px\">");
                 if (set.getMaster()) {
                     sb.append(missingCardCounter.missingCardsWithBold(set.getRootName()));
                 } else {
-                    sb.append(String.format("<table><tr><td valign=\"top\">Missing</td><td>%s</td></tr><tr><td valign=\"top\">Owned</td><td>%s</td></tr></table>", missingCardCounter.missingCardsWithBold(set.getRootName()), missingCardCounter.ownedCards(set.getRootName())));
+                    sb.append(String.format("<table><tr><td valign=\"top\">Missing</td><td style=\"font-size: 10pt\">%s</td></tr><tr><td valign=\"top\">Owned</td><td style=\"font-size: 10pt\">%s</td></tr></table>", missingCardCounter.missingCardsWithBold(set.getRootName()), missingCardCounter.ownedCards(set.getRootName())));
                 }
                 sb.append("</td></tr>");
             }
